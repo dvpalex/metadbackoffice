@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { ILogin } from "../../hooks/login";
+import { ILogin } from "../../services/top-med";
+import { useLogarApp } from "../../hooks/useTopMed";
 
 const Login: React.FC = () => {
   const {
@@ -8,9 +9,10 @@ const Login: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<ILogin>();
+  const { logar, status } = useLogarApp();
 
   const onSubmit = async (data: ILogin) => {
-    console.log(data);
+    logar(data);
   };
 
   return (
@@ -46,6 +48,7 @@ const Login: React.FC = () => {
           </div>
           <button
             type="submit"
+            disabled={status === "loading"}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
           >
             Entrar
